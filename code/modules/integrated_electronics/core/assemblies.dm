@@ -286,6 +286,7 @@
 		return
 	if(src && input)
 		to_chat(M, "<span class='notice'>The machine now has a label reading '[input]'.</span>")
+		src.investigate_log(" was renamed to '[input]' by [key_name(user)].", INVESTIGATE_CIRCUIT)
 		name = input
 
 /obj/item/electronic_assembly/proc/add_allowed_scanner(ckey)
@@ -473,6 +474,7 @@
 		diag_hud_set_circuitstat() //update diagnostic hud
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You slot \the [cell] inside \the [src]'s power supplier.</span>")
+		src.investigate_log(" had a cell inserted by [key_name(user)].", INVESTIGATE_CIRCUIT)
 		interact(user)
 		return TRUE
 	else if(istype(I, /obj/item/integrated_electronics/detailer))
