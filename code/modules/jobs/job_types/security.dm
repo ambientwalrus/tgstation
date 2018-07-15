@@ -162,8 +162,7 @@ Detective
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
-	if(istype(cig)) //Some species specfic changes can mess this up (plasmamen)
-		cig.light("")
+	cig.light("")
 
 	if(visualsOnly)
 		return

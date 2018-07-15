@@ -68,22 +68,14 @@ SUBSYSTEM_DEF(blackbox)
 			return FALSE
 	return ..()
 
-//Recorded on subsystem shutdown
-/datum/controller/subsystem/blackbox/proc/FinalFeedback()
+/datum/controller/subsystem/blackbox/Shutdown()
+	sealed = FALSE
 	record_feedback("tally", "ahelp_stats", GLOB.ahelp_tickets.active_tickets.len, "unresolved")
 	for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
 		if (MS.pda_msgs.len)
 			record_feedback("tally", "radio_usage", MS.pda_msgs.len, "PDA")
 		if (MS.rc_msgs.len)
 			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
-
-	for(var/player_key in GLOB.player_details)
-		var/datum/player_details/PD = GLOB.player_details[player_key]
-		record_feedback("tally", "client_byond_version", 1, PD.byond_version)
-
-/datum/controller/subsystem/blackbox/Shutdown()
-	sealed = FALSE
-	FinalFeedback()
 
 	if (!SSdbcore.Connect())
 		return
